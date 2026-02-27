@@ -13,13 +13,11 @@ import folium
 from geopy.distance import distance
 from scipy.stats import norm
 from scipy import stats
+from barnehage_id import hent_barnehage_oslo_id_str
 
 
-#Setter wd
-os.chdir("/home/madsranden/Documents/barnehage_analyse")
-
-#Leser data
-url = "https://statistikkportalen.udir.no/api/rapportering/rest/v1/Statistikk/BHG/FUB/1/3/data?radSti=F&filter=AldergruppeID(-10)_BarnehageenhetID(-12_4932_9901)_BarnehagestoerrelsegruppeID(-10)_KjoennID(-10)_KommunalitetID(-10)_SpoersmaalID(-122_-64_-63_-62_-59_-58_-57_-55_-54_-53)_VisAntallBesvart(1)_VisScore(1)&dataChanged=2026-02-24_125900"
+#Leser data 
+url = "https://statistikkportalen.udir.no/api/rapportering/rest/v1/Statistikk/BHG/FUB/1/3/data?radSti=F&filter=AldergruppeID(-10)_BarnehageenhetID(-12_4932_9901)_BarnehagestoerrelsegruppeID(-10)_KjoennID(-10)_KommunalitetID(-10)_SpoersmaalID(-122_-64_-63_-62_-59_-58_-57_-55_-54_-53)_VisAntallBesvart(1)_VisScore(1)&dataChanged=2026-02-24_125900" #Må legge inn string for riktig id
 
 headers = {
     "User-Agent": "Mozilla/5.0",
