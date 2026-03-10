@@ -1,0 +1,15 @@
+[project]
+name = "barnehager-gamle-oslo"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+    "folium",
+    "geopy",
+    "ipykernel",
+    "jupyterlab",
+    "matplotlib",
+    "numpy",
+    "pandas",
+    "scipy",
+    "seaborn",
+]
