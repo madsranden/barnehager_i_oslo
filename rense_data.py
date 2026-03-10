@@ -10,7 +10,16 @@ from barnehage_id import hent_barnehage_oslo_id_str
 barnehage_id = hent_barnehage_oslo_id_str()
 
 #Leser data 
-url = f"https://statistikkportalen.udir.no/api/rapportering/rest/v1/Statistikk/BHG/FUB/1/3/data?radSti=F&filter=AldergruppeID(-10)_BarnehageenhetID({barnehage_id})_BarnehagestoerrelsegruppeID(-10)_KjoennID(-10)_KommunalitetID(-10)_SpoersmaalID(-122_-64_-63_-62_-59_-58_-57_-55_-54_-53)_VisAntallBesvart(1)_VisScore(1)"
+url = f"https://statistikkportalen.udir.no/api/rapportering/rest/v1/Statistikk/BHG/FUB/1/3/data\
+?radSti=F\
+&filter=AldergruppeID(-10)\
+_BarnehageenhetID({barnehage_id})\
+_BarnehagestoerrelsegruppeID(-10)\
+_KjoennID(-10)\
+_KommunalitetID(-10)\
+_SpoersmaalID(-122_-64_-63_-62_-59_-58_-57_-55_-54_-53)\
+_VisAntallBesvart(1)\
+_VisScore(1)"
 
 headers = {
     "User-Agent": "Mozilla/5.0",
@@ -95,13 +104,13 @@ for row in rows:
 df = pd.DataFrame(list_to_df)
 
 #Jukser litt. Hver barnehage skal bare ha 10, 20 eller 30 verdier (spm*år)
-terskel = len(år_liste) * len(rows) # Setter terskelen som det ikke være flere verdier enn
+filter_verdier = [(i)*len(rows) for i in range(1,len(år_liste)+1)] #Lager liste med mulige verdier
 
-rare_barnehager = (
+gyldige_barnehager = (
     df.groupby("barnehage")
       .size()
-      .loc[lambda x: x > terskel]
+      .loc[lambda x: x.isin(filter_verdier)]
       .index
-)
+) #Henter barnehagenavn. 
 
-df_ren = df[~df["barnehage"].isin(rare_barnehager)]
+df_ren = df[df["barnehage"].isin(gyldige_barnehager)]
