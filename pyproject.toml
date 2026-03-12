@@ -3,6 +3,7 @@ name = "barnehager-gamle-oslo"
 version = "0.1.0"
 requires-python = ">=3.11"
 dependencies = [
+    "fastparquet>=2025.12.0",
     "folium",
     "geopy",
     "ipykernel",
@@ -10,6 +11,7 @@ dependencies = [
     "matplotlib",
     "numpy",
     "pandas",
+    "pyarrow>=23.0.1",
     "scipy",
     "seaborn",
 ]

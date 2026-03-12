@@ -128,4 +128,5 @@ df_ren = df_ren.astype({
       "Eierform": "category"
   })
 
-df_ren.info()
+df_ren.to_parquet("data/barnehager_renset.parquet", 
+index=False, engine="fastparquet")
