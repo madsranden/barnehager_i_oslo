@@ -16,7 +16,7 @@ url = f"https://statistikkportalen.udir.no/api/rapportering/rest/v1/Statistikk/B
 _BarnehageenhetID({barnehage_id})\
 _BarnehagestoerrelsegruppeID(-10)\
 _KjoennID(-10)\
-_KommunalitetID(-10)\
+_KommunalitetID(1_2)\
 _SpoersmaalID(-122_-64_-63_-62_-59_-58_-57_-55_-54_-53)\
 _VisAntallBesvart(1)\
 _VisScore(1)"
@@ -53,6 +53,9 @@ barnehager = [
     for i in range(antall_barnehager)
 ]
 
+#Henter kommunal/privat
+kommunal = metadata["columns"][6]
+
 #Looper over de forskjellige elementene for å kunne lage en df
 list_to_df = []
 
@@ -74,7 +77,7 @@ for row in rows:
     
     offset = 0
     barnehage_offset = 0
-    
+
     for år_index, år in enumerate(år_liste):
         
         år_count = år_column_counts[år_index]# Antall verdier til hvert år
@@ -83,10 +86,12 @@ for row in rows:
         antall_barnehager_år = år_count // 2 #Git at vi henter snitt  og antall svar
         # Hent barnehager for dette året
         barnehager_år = barnehage_entries[barnehage_offset : barnehage_offset + antall_barnehager_år]
+        kommunal_år = kommunal[barnehage_offset : barnehage_offset + antall_barnehager_år]
         barnehage_offset += antall_barnehager_år
 
         for i, barnehage_dict in enumerate(barnehager_år):
             barnehage = barnehage_dict["name"]
+            eierform = kommunal_år[i]["name"]
             snitt_idx = i * 2
             antall_idx = snitt_idx + 1
             
@@ -98,7 +103,8 @@ for row in rows:
                 "spørsmål": spørsmål,
                 "barnehage": barnehage,
                 "snitt": snitt,
-                "antall_besvart": antall
+                "antall_besvart": antall,
+                "Eierform": eierform
             })
 
 df = pd.DataFrame(list_to_df)
@@ -114,3 +120,12 @@ gyldige_barnehager = (
 ) #Henter barnehagenavn. 
 
 df_ren = df[df["barnehage"].isin(gyldige_barnehager)]
+
+df_ren = df_ren.astype({
+      "år": int,
+      "spørsmål": "category",
+      "barnehage": "category",
+      "Eierform": "category"
+  })
+
+df_ren.info()
