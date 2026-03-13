@@ -12,6 +12,7 @@ dependencies = [
     "numpy",
     "pandas",
     "pyarrow>=23.0.1",
+    "rapidfuzz>=3.14.3",
     "scipy",
     "seaborn",
 ]
