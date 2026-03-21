@@ -191,7 +191,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> row: row.mean(), axis<span class="op">=</span><span class="dv">1</span></span>
 <span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="e2fb9595-9b82-44e0-a8b7-7740aeb681e5" class="cell" data-execution_count="8">
+<div id="e2fb9595-9b82-44e0-a8b7-7740aeb681e5" class="cell" data-execution_count="44">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df_sorted_tilfreds <span class="op">=</span> (</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    df_wide</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>        .sort_values(<span class="st">"Tilfredshet"</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
@@ -205,31 +205,41 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>order_tilfreds <span class="op">=</span> df_sorted_tilfreds[<span class="st">"barnehage"</span>].tolist()</span>
 <span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>order_barnet <span class="op">=</span> df_sorted_barnet[<span class="st">"barnehage"</span>].tolist()</span>
 <span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>ax1 <span class="op">=</span> sns.barplot(</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>sns.barplot(</span>
 <span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>df_sorted_tilfreds,</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">"barnehage"</span>,</span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span><span class="st">"Tilfredshet"</span>,</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span><span class="st">"barnehage"</span>,</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">"Tilfredshet"</span>,</span>
 <span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    hue<span class="op">=</span><span class="st">"Eierform"</span>,</span>
 <span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    dodge<span class="op">=</span><span class="va">False</span>,</span>
 <span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    order<span class="op">=</span>order_tilfreds</span>
 <span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>ax1.set_xticklabels([v[:<span class="dv">15</span>] <span class="cf">for</span> v <span class="kw">in</span> order_tilfreds], rotation<span class="op">=</span><span class="dv">45</span>, ha<span class="op">=</span><span class="st">"right"</span>)</span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>plt.yticks(ha<span class="op">=</span><span class="st">"right"</span>,</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>           ticks<span class="op">=</span><span class="bu">range</span>(<span class="bu">len</span>(df_sorted_tilfreds[<span class="st">"barnehage"</span>])),</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>           labels<span class="op">=</span>[v[:<span class="dv">15</span>] <span class="cf">for</span> v <span class="kw">in</span> df_sorted_tilfreds[<span class="st">'barnehage'</span>]])</span>
 <span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>ax2 <span class="op">=</span> sns.barplot(</span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>df_sorted_barnet,</span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">"barnehage"</span>,</span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span><span class="st">"Gjennomsnittlig_score"</span>,</span>
-<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>    hue<span class="op">=</span><span class="st">"Eierform"</span>,</span>
-<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>    dodge<span class="op">=</span><span class="va">False</span>,</span>
-<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>    order<span class="op">=</span>order_barnet</span>
-<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>ax2.set_xticklabels([v[:<span class="dv">15</span>] <span class="cf">for</span> v <span class="kw">in</span> order_barnet], rotation<span class="op">=</span><span class="dv">45</span>, ha<span class="op">=</span><span class="st">"right"</span>)</span>
-<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>&lt;positron-console-cell-8&gt;:22: UserWarning: set_ticklabels() should only be used with a fixed number of ticks, i.e. after set_ticks() or using a FixedLocator.</code></pre>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>ax2 <span class="op">=</span> sns.barplot(</span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>df_sorted_barnet,</span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span><span class="st">"barnehage"</span>,</span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">"Gjennomsnittlig_score"</span>,</span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>    hue<span class="op">=</span><span class="st">"Eierform"</span>,</span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>    dodge<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>    order<span class="op">=</span>order_barnet</span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>plt.yticks(ha<span class="op">=</span><span class="st">"right"</span>,</span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>           ticks<span class="op">=</span><span class="bu">range</span>(<span class="bu">len</span>(df_sorted_barnet[<span class="st">"barnehage"</span>])),</span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>           labels<span class="op">=</span>[v[:<span class="dv">15</span>] <span class="cf">for</span> v <span class="kw">in</span> df_sorted_barnet[<span class="st">'barnehage'</span>]])</span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="analyse_files/figure-html/cell-9-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 <div class="cell-output cell-output-display">
 <div>
@@ -238,41 +248,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>&lt;positron-console-cell-8&gt;:34: UserWarning: set_ticklabels() should only be used with a fixed number of ticks, i.e. after set_ticks() or using a FixedLocator.</code></pre>
-</div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="analyse_files/figure-html/cell-9-output-4.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
 </div>
 <p>Som ventet er det mange av de samme barnehagene som gjør det bra både på total tilfredshet og på gjennomsnittlig score på de andre indikatorene. Dette kommer også frem i punktdiagrammet under.</p>
 <p>Private barnehager utgjør en større andel av topplisten for begge indikatorene. Dette er tilfellet til tross for at det er færre private barnehager i datasettet.</p>
 <p>Figurene under viser at private barnehager generelt scorer i snitt signifikant bedre enn kommunale i Oslo. Den beste og dårligste poengsummen er bedre sammenlignet med kommunale og spredningen er mindre.</p>
 <div id="3f5b5729" class="cell" data-execution_count="36">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>sns.relplot?</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>sns.relplot?</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="4aa51c10-7a8e-48c9-ba02-9d1d12c00545" class="cell" data-execution_count="38">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>g <span class="op">=</span> sns.relplot(data<span class="op">=</span>df_wide,</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>            x<span class="op">=</span><span class="st">"Gjennomsnittlig_score"</span>,</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>            y<span class="op">=</span><span class="st">"Tilfredshet"</span>,</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>            hue<span class="op">=</span><span class="st">"Eierform"</span>,</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>            kind<span class="op">=</span><span class="st">"scatter"</span>,</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>            alpha<span class="op">=</span><span class="fl">0.7</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>                )</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>g.map_dataframe(</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    sns.regplot,</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">"Gjennomsnittlig_score"</span>,</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span><span class="st">"Tilfredshet"</span>,</span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    scatter<span class="op">=</span><span class="va">False</span>,</span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    ci<span class="op">=</span><span class="va">None</span>,</span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">"black"</span></span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>g <span class="op">=</span> sns.relplot(data<span class="op">=</span>df_wide,</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>            x<span class="op">=</span><span class="st">"Gjennomsnittlig_score"</span>,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>            y<span class="op">=</span><span class="st">"Tilfredshet"</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>            hue<span class="op">=</span><span class="st">"Eierform"</span>,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>            kind<span class="op">=</span><span class="st">"scatter"</span>,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>            alpha<span class="op">=</span><span class="fl">0.7</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>                )</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>g.map_dataframe(</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    sns.regplot,</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">"Gjennomsnittlig_score"</span>,</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span><span class="st">"Tilfredshet"</span>,</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    scatter<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    ci<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">"black"</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -282,16 +282,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div id="c5a26d38-7128-4ebf-ad97-a08bb95fd531" class="cell" data-execution_count="10">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>sns.pointplot(data<span class="op">=</span>df_wide, </span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>              y<span class="op">=</span><span class="st">"Tilfredshet"</span>, x<span class="op">=</span><span class="st">"Eierform"</span>,  </span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>              errorbar<span class="op">=</span>(<span class="st">'ci'</span>, <span class="dv">95</span>), <span class="co">#Burde egentlig regnes separat for disse men er her på den trygge siden</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>             capsize<span class="op">=</span><span class="fl">0.1</span>,</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>             linestyle<span class="op">=</span><span class="st">"none"</span>)</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>sns.boxplot(data<span class="op">=</span>df_wide, </span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>              y<span class="op">=</span><span class="st">"Tilfredshet"</span>, x<span class="op">=</span><span class="st">"Eierform"</span>)</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>sns.pointplot(data<span class="op">=</span>df_wide, </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>              y<span class="op">=</span><span class="st">"Tilfredshet"</span>, x<span class="op">=</span><span class="st">"Eierform"</span>,  </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>              errorbar<span class="op">=</span>(<span class="st">'ci'</span>, <span class="dv">95</span>), <span class="co">#Burde egentlig regnes separat for disse men er her på den trygge siden</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>             capsize<span class="op">=</span><span class="fl">0.1</span>,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>             linestyle<span class="op">=</span><span class="st">"none"</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>sns.boxplot(data<span class="op">=</span>df_wide, </span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>              y<span class="op">=</span><span class="st">"Tilfredshet"</span>, x<span class="op">=</span><span class="st">"Eierform"</span>)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -310,59 +310,59 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="avstand-til-barnehage" class="level2">
 <h2 class="anchored" data-anchor-id="avstand-til-barnehage">Avstand til barnehage</h2>
 <div id="303abc09" class="cell" data-execution_count="11">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>query <span class="op">=</span> <span class="st">"""</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="st">[out:json];</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="st">area[name="Oslo"]-&gt;.oslo;</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="st">nwr[amenity=kindergarten](area.oslo);</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="st">out center;</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span> <span class="co">#Finner alle obs som er tagget som barnehage i Oslo. Out center gir koordinatene for midtpunktet til hvert element</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>r <span class="op">=</span> requests.post(<span class="st">"https://overpass-api.de/api/interpreter"</span>, data<span class="op">=</span>query)</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>elementer <span class="op">=</span> r.json()[<span class="st">"elements"</span>] <span class="co">#Består av en en dict på to nivåer. Lat og long ligger i nivå 1, mens navn ligger i nivå to (tags{name})</span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>koord <span class="op">=</span> [</span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">"navn"</span>: e.get(<span class="st">"tags"</span>, {}).get(<span class="st">"name"</span>, <span class="st">""</span>),</span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">"lat"</span>: e.get(<span class="st">"lat"</span>) <span class="kw">or</span> e.get(<span class="st">"center"</span>, {}).get(<span class="st">"lat"</span>),</span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">"lon"</span>: e.get(<span class="st">"lon"</span>) <span class="kw">or</span> e.get(<span class="st">"center"</span>, {}).get(<span class="st">"lon"</span>)</span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> e <span class="kw">in</span> elementer <span class="cf">if</span> e.get(<span class="st">"tags"</span>, {}).get(<span class="st">"name"</span>) <span class="co">#Filtrerer bort elementer som ikke har et navn. None = false</span></span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>query <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="st">[out:json];</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="st">area[name="Oslo"]-&gt;.oslo;</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="st">nwr[amenity=kindergarten](area.oslo);</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="st">out center;</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span> <span class="co">#Finner alle obs som er tagget som barnehage i Oslo. Out center gir koordinatene for midtpunktet til hvert element</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>r <span class="op">=</span> requests.post(<span class="st">"https://overpass-api.de/api/interpreter"</span>, data<span class="op">=</span>query)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>elementer <span class="op">=</span> r.json()[<span class="st">"elements"</span>] <span class="co">#Består av en en dict på to nivåer. Lat og long ligger i nivå 1, mens navn ligger i nivå to (tags{name})</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>koord <span class="op">=</span> [</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">"navn"</span>: e.get(<span class="st">"tags"</span>, {}).get(<span class="st">"name"</span>, <span class="st">""</span>),</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">"lat"</span>: e.get(<span class="st">"lat"</span>) <span class="kw">or</span> e.get(<span class="st">"center"</span>, {}).get(<span class="st">"lat"</span>),</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">"lon"</span>: e.get(<span class="st">"lon"</span>) <span class="kw">or</span> e.get(<span class="st">"center"</span>, {}).get(<span class="st">"lon"</span>)</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> e <span class="kw">in</span> elementer <span class="cf">if</span> e.get(<span class="st">"tags"</span>, {}).get(<span class="st">"name"</span>) <span class="co">#Filtrerer bort elementer som ikke har et navn. None = false</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="3a859282" class="cell" data-execution_count="12">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> normaliser(navn, støyende_ord <span class="op">=</span> [<span class="st">"barnehage"</span>, <span class="st">"as"</span>, <span class="st">"avd"</span>, <span class="st">"famliebarnehage"</span>]):</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    navn <span class="op">=</span> navn.lower()</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="bu">ord</span> <span class="kw">in</span> støyende_ord:</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>        navn <span class="op">=</span> re.sub(<span class="vs">rf"</span><span class="dv">\b</span><span class="sc">{</span><span class="bu">ord</span><span class="sc">}</span><span class="dv">\b</span><span class="vs">"</span>, <span class="st">""</span>, navn)</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">" "</span>.join(navn.split())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> normaliser(navn, støyende_ord <span class="op">=</span> [<span class="st">"barnehage"</span>, <span class="st">"as"</span>, <span class="st">"avd"</span>, <span class="st">"famliebarnehage"</span>]):</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    navn <span class="op">=</span> navn.lower()</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="bu">ord</span> <span class="kw">in</span> støyende_ord:</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>        navn <span class="op">=</span> re.sub(<span class="vs">rf"</span><span class="dv">\b</span><span class="sc">{</span><span class="bu">ord</span><span class="sc">}</span><span class="dv">\b</span><span class="vs">"</span>, <span class="st">""</span>, navn)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">" "</span>.join(navn.split())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="c0743220" class="cell" data-execution_count="13">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Lager funksjon med fuzzy søk. Dvs at det ikke trenger å være eksakt match. Må vurdere terkelsn her</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> geocode_fuzzy(navn, koord, terskel<span class="op">=</span><span class="dv">90</span>):</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    navn_liste <span class="op">=</span> [normaliser(b[<span class="st">"navn"</span>]) <span class="cf">for</span> b <span class="kw">in</span> koord]</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    match, score, idx <span class="op">=</span> process.extractOne(</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>        normaliser(navn), navn_liste)</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> score <span class="op">&gt;=</span> terskel:</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> koord[idx][<span class="st">"lat"</span>], koord[idx][<span class="st">"lon"</span>], score, koord[idx][<span class="st">"navn"</span>]</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Ingen god match: '</span><span class="sc">{</span>navn<span class="sc">}</span><span class="ss">' (beste: '</span><span class="sc">{</span>match<span class="sc">}</span><span class="ss">', score: </span><span class="sc">{</span>score<span class="sc">}</span><span class="ss">)"</span>)</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">None</span>, <span class="va">None</span>, <span class="va">None</span>, <span class="va">None</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Lager funksjon med fuzzy søk. Dvs at det ikke trenger å være eksakt match. Må vurdere terkelsn her</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> geocode_fuzzy(navn, koord, terskel<span class="op">=</span><span class="dv">90</span>):</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    navn_liste <span class="op">=</span> [normaliser(b[<span class="st">"navn"</span>]) <span class="cf">for</span> b <span class="kw">in</span> koord]</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    match, score, idx <span class="op">=</span> process.extractOne(</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>        normaliser(navn), navn_liste)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> score <span class="op">&gt;=</span> terskel:</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> koord[idx][<span class="st">"lat"</span>], koord[idx][<span class="st">"lon"</span>], score, koord[idx][<span class="st">"navn"</span>]</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Ingen god match: '</span><span class="sc">{</span>navn<span class="sc">}</span><span class="ss">' (beste: '</span><span class="sc">{</span>match<span class="sc">}</span><span class="ss">', score: </span><span class="sc">{</span>score<span class="sc">}</span><span class="ss">)"</span>)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">None</span>, <span class="va">None</span>, <span class="va">None</span>, <span class="va">None</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="d3134e2d" class="cell" data-execution_count="14">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>barnehage_navn <span class="op">=</span> df_wide[<span class="st">"barnehage"</span>].tolist()           </span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>df_geo <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"barnehage"</span>: barnehage_navn,        </span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Latitude"</span>: [np.nan] <span class="op">*</span> <span class="bu">len</span>(barnehage_navn),</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Longitude"</span>: [np.nan] <span class="op">*</span> <span class="bu">len</span>(barnehage_navn),</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Score"</span>: [np.nan] <span class="op">*</span> <span class="bu">len</span>(barnehage_navn),</span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Barnehage_fra_api"</span>: pd.array([<span class="st">""</span>] <span class="op">*</span> <span class="bu">len</span>(barnehage_navn), dtype<span class="op">=</span><span class="st">"string"</span>)</span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx <span class="kw">in</span> df_geo.index:</span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>    lat, lon, score, barnehage_api <span class="op">=</span> geocode_fuzzy(df_geo.iloc[idx, <span class="dv">0</span>], koord)</span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>    df_geo.iloc[idx, <span class="dv">1</span>] <span class="op">=</span> lat</span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>    df_geo.iloc[idx, <span class="dv">2</span>] <span class="op">=</span> lon</span>
-<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>    df_geo.iloc[idx, <span class="dv">3</span>] <span class="op">=</span> score</span>
-<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>    df_geo.iloc[idx, <span class="dv">4</span>] <span class="op">=</span> barnehage_api</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>barnehage_navn <span class="op">=</span> df_wide[<span class="st">"barnehage"</span>].tolist()           </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>df_geo <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"barnehage"</span>: barnehage_navn,        </span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Latitude"</span>: [np.nan] <span class="op">*</span> <span class="bu">len</span>(barnehage_navn),</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Longitude"</span>: [np.nan] <span class="op">*</span> <span class="bu">len</span>(barnehage_navn),</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Score"</span>: [np.nan] <span class="op">*</span> <span class="bu">len</span>(barnehage_navn),</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Barnehage_fra_api"</span>: pd.array([<span class="st">""</span>] <span class="op">*</span> <span class="bu">len</span>(barnehage_navn), dtype<span class="op">=</span><span class="st">"string"</span>)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx <span class="kw">in</span> df_geo.index:</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    lat, lon, score, barnehage_api <span class="op">=</span> geocode_fuzzy(df_geo.iloc[idx, <span class="dv">0</span>], koord)</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>    df_geo.iloc[idx, <span class="dv">1</span>] <span class="op">=</span> lat</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    df_geo.iloc[idx, <span class="dv">2</span>] <span class="op">=</span> lon</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>    df_geo.iloc[idx, <span class="dv">3</span>] <span class="op">=</span> score</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>    df_geo.iloc[idx, <span class="dv">4</span>] <span class="op">=</span> barnehage_api</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Ingen god match: 'Akersløkka barnehage' (beste: 'keyserløkka', score: 76.19047619047619)
 Ingen god match: 'Brennastubben familiebarnehage AS' (beste: 'monoliten familiebarnehage', score: 75.0)
@@ -390,10 +390,10 @@ Ingen god match: 'Veksthusfløtten familiebarnehage AS' (beste: 'monoliten famil
 </div>
 </div>
 <div id="bf78c77f" class="cell" data-execution_count="15">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Antall missing: </span><span class="sc">{</span><span class="bu">len</span>(df_geo[df_geo[<span class="st">"Latitude"</span>].isna()])<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_geo[df_geo[<span class="st">"Latitude"</span>].isna()][[<span class="st">"barnehage"</span>, <span class="st">"Barnehage_fra_api"</span>, <span class="st">"Score"</span>]])</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>df_geo <span class="op">=</span> df_geo.dropna(subset<span class="op">=</span>[<span class="st">"Latitude"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Antall missing: </span><span class="sc">{</span><span class="bu">len</span>(df_geo[df_geo[<span class="st">"Latitude"</span>].isna()])<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_geo[df_geo[<span class="st">"Latitude"</span>].isna()][[<span class="st">"barnehage"</span>, <span class="st">"Barnehage_fra_api"</span>, <span class="st">"Score"</span>]])</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>df_geo <span class="op">=</span> df_geo.dropna(subset<span class="op">=</span>[<span class="st">"Latitude"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Antall missing: 23
                                              barnehage Barnehage_fra_api  \
@@ -455,27 +455,27 @@ Ingen god match: 'Veksthusfløtten familiebarnehage AS' (beste: 'monoliten famil
 <p>Det er mange måter å kombinere avstand og score fra foreldreundersøkelsen. En metode, som gir en intuitiv tolkning, er å la begge være på den samme skalaen. Dette gjør det enkelt å sammenstille dem. Siden Foreldreundersøkelsen tar i bruk en skala mellom 1 og 5, er det enkelst å også bruke den for avstandsmålet.</p>
 <p>Scoren på total tilfredshet bruker imidlertid ikke hele skalaen. I 2026 er den største verdien er <code>5</code>, mens den minste verdien er så høy som <code>3,4</code>. Dersom avstandsmålet hadde brukt hele skalaen, ville målet fått uforholdsmessig stor vekt. En bedre metode er derfor å bare bruke skalaen mellom 3,7 og 5. Deretter kan dette vektes senere.</p>
 <div id="4ab3cc74" class="cell" data-execution_count="16">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>geolocator <span class="op">=</span> Nominatim(user_agent<span class="op">=</span><span class="st">"barnehager"</span>) </span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> geocode_bedrift(navn):</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    query <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>navn<span class="sc">}</span><span class="ss">, Oslo, Norge"</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>        location <span class="op">=</span>geolocator.geocode(query)</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> location:</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> location.latitude, location.longitude</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Feil ved geokoding: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss"> for </span><span class="sc">{</span>query<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span>, <span class="va">None</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>geolocator <span class="op">=</span> Nominatim(user_agent<span class="op">=</span><span class="st">"barnehager"</span>) </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> geocode_bedrift(navn):</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    query <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>navn<span class="sc">}</span><span class="ss">, Oslo, Norge"</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>        location <span class="op">=</span>geolocator.geocode(query)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> location:</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> location.latitude, location.longitude</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Feil ved geokoding: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss"> for </span><span class="sc">{</span>query<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span>, <span class="va">None</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="2e3b1bb0-82db-4c9f-92b5-c488af984469" class="cell" data-execution_count="17">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Legger til hjem</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>hjem <span class="op">=</span> geocode_bedrift(hjem_adresse) <span class="co">#Hjemadresse er definert i toppen av arket for enkel oppdatering</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Lager variabel med avstand mellom hjem og barnehage</span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>df_geo[<span class="st">"Avstand_hjem_m"</span>] <span class="op">=</span> df_geo.<span class="bu">apply</span>(</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> row: distance((row[<span class="st">"Latitude"</span>], row[<span class="st">"Longitude"</span>]), hjem).m, axis<span class="op">=</span><span class="dv">1</span></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_geo.head())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Legger til hjem</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>hjem <span class="op">=</span> geocode_bedrift(hjem_adresse) <span class="co">#Hjemadresse er definert i toppen av arket for enkel oppdatering</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Lager variabel med avstand mellom hjem og barnehage</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>df_geo[<span class="st">"Avstand_hjem_m"</span>] <span class="op">=</span> df_geo.<span class="bu">apply</span>(</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> row: distance((row[<span class="st">"Latitude"</span>], row[<span class="st">"Longitude"</span>]), hjem).m, axis<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_geo.head())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                       barnehage   Latitude  Longitude  Score  \
 0  Abildsø menighetsbarnehage AS  59.879716  10.827346  100.0   
@@ -493,42 +493,42 @@ Ingen god match: 'Veksthusfløtten familiebarnehage AS' (beste: 'monoliten famil
 </div>
 </div>
 <div id="b468b4df-d0e0-4ce6-9f93-fc1ccf72f605" class="cell" data-execution_count="18">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Lager trinn for å gir en score</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>trinn <span class="op">=</span> np.linspace(df_wide[<span class="st">"Tilfredshet"</span>].<span class="bu">max</span>(), df_wide[<span class="st">"Tilfredshet"</span>].<span class="bu">min</span>(), <span class="bu">len</span>(df_wide[<span class="st">"Tilfredshet"</span>].value_counts()))</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>trinn</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Lager trinn for å gir en score</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>trinn <span class="op">=</span> np.linspace(df_wide[<span class="st">"Tilfredshet"</span>].<span class="bu">max</span>(), df_wide[<span class="st">"Tilfredshet"</span>].<span class="bu">min</span>(), <span class="bu">len</span>(df_wide[<span class="st">"Tilfredshet"</span>].value_counts()))</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>trinn</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <pre><code>array([5. , 4.9, 4.8, 4.7, 4.6, 4.5, 4.4, 4.3, 4.2, 4.1, 4. , 3.9, 3.8,
        3.7, 3.6, 3.5, 3.4])</code></pre>
 </div>
 </div>
 <div id="10d3d06b-49d8-4751-bfce-a614992a2d94" class="cell" data-execution_count="19">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Alternativ som følger fordelingen til avstandsmålet</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>maal <span class="op">=</span> df_geo[<span class="st">"Avstand_hjem_m"</span>].agg([<span class="st">"mean"</span>, <span class="st">"std"</span>])</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>bins_norm <span class="op">=</span> []</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> np.linspace(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">11</span>):</span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>    qtile <span class="op">=</span> norm.ppf(i, loc<span class="op">=</span>maal.iloc[<span class="dv">0</span>], scale <span class="op">=</span> maal.iloc[<span class="dv">1</span>])</span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>    bins_norm.append(qtile)</span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>bins_norm[<span class="dv">0</span>] <span class="op">=</span> df_geo[<span class="st">"Avstand_hjem_m"</span>].<span class="bu">min</span>()<span class="op">-</span><span class="dv">1</span></span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>bins_norm[<span class="op">-</span><span class="dv">1</span>] <span class="op">=</span> df_geo[<span class="st">"Avstand_hjem_m"</span>].<span class="bu">max</span>()<span class="op">+</span><span class="dv">1</span></span>
-<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>df_geo[<span class="st">"Avstand_score_norm"</span>] <span class="op">=</span> (</span>
-<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>    pd.cut(</span>
-<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>    df_geo[<span class="st">"Avstand_hjem_m"</span>],</span>
-<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>    bins<span class="op">=</span>np.linspace(df_geo[<span class="st">"Avstand_hjem_m"</span>].<span class="bu">min</span>()<span class="op">-</span><span class="dv">1</span>, df_geo[<span class="st">"Avstand_hjem_m"</span>].<span class="bu">max</span>()<span class="op">+</span><span class="dv">1</span>, <span class="bu">len</span>(trinn)<span class="op">+</span><span class="dv">1</span>),</span>
-<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>    labels<span class="op">=</span>trinn)</span>
-<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>    .astype(<span class="bu">float</span>)</span>
-<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Alternativ som følger fordelingen til avstandsmålet</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>maal <span class="op">=</span> df_geo[<span class="st">"Avstand_hjem_m"</span>].agg([<span class="st">"mean"</span>, <span class="st">"std"</span>])</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>bins_norm <span class="op">=</span> []</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> np.linspace(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">11</span>):</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>    qtile <span class="op">=</span> norm.ppf(i, loc<span class="op">=</span>maal.iloc[<span class="dv">0</span>], scale <span class="op">=</span> maal.iloc[<span class="dv">1</span>])</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>    bins_norm.append(qtile)</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>bins_norm[<span class="dv">0</span>] <span class="op">=</span> df_geo[<span class="st">"Avstand_hjem_m"</span>].<span class="bu">min</span>()<span class="op">-</span><span class="dv">1</span></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>bins_norm[<span class="op">-</span><span class="dv">1</span>] <span class="op">=</span> df_geo[<span class="st">"Avstand_hjem_m"</span>].<span class="bu">max</span>()<span class="op">+</span><span class="dv">1</span></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>df_geo[<span class="st">"Avstand_score_norm"</span>] <span class="op">=</span> (</span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>    pd.cut(</span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>    df_geo[<span class="st">"Avstand_hjem_m"</span>],</span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>    bins<span class="op">=</span>np.linspace(df_geo[<span class="st">"Avstand_hjem_m"</span>].<span class="bu">min</span>()<span class="op">-</span><span class="dv">1</span>, df_geo[<span class="st">"Avstand_hjem_m"</span>].<span class="bu">max</span>()<span class="op">+</span><span class="dv">1</span>, <span class="bu">len</span>(trinn)<span class="op">+</span><span class="dv">1</span>),</span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>    labels<span class="op">=</span>trinn)</span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>    .astype(<span class="bu">float</span>)</span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="662b4c06" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>sns.histplot(df_geo, </span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>x<span class="op">=</span><span class="st">"Avstand_score_norm"</span>,</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>bins<span class="op">=</span><span class="dv">17</span>)</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>plt.show() <span class="co">#Siden en barnehage er veldig langt unna, er det den eneste som får den dårligste score. Det gir på en måte mening, men bruker i praksis lite av skala. Vurder en annen tilnærming. Feks kontinuerlig funksjon</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>sns.histplot(df_geo, </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>x<span class="op">=</span><span class="st">"Avstand_score_norm"</span>,</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>bins<span class="op">=</span><span class="dv">17</span>)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>plt.show() <span class="co">#Siden en barnehage er veldig langt unna, er det den eneste som får den dårligste score. Det gir på en måte mening, men bruker i praksis lite av skala. Vurder en annen tilnærming. Feks kontinuerlig funksjon</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -538,55 +538,55 @@ Ingen god match: 'Veksthusfløtten familiebarnehage AS' (beste: 'monoliten famil
 </div>
 </div>
 <div id="ce60a09d-f818-4b26-b336-3cb0078ba829" class="cell" data-execution_count="21">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Merger datasett</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>df_merged <span class="op">=</span> pd.merge(</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    df_wide, </span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    df_geo, </span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>    on<span class="op">=</span><span class="st">"barnehage"</span>, </span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>    how<span class="op">=</span><span class="st">"left"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Merger datasett</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>df_merged <span class="op">=</span> pd.merge(</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    df_wide, </span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    df_geo, </span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    on<span class="op">=</span><span class="st">"barnehage"</span>, </span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    how<span class="op">=</span><span class="st">"left"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="1633c7ea-8b11-456a-973e-552f14fceb2f" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Regner ut totalscore</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>vekt_avstand <span class="op">=</span> <span class="dv">1</span><span class="op">-</span>vekt_undersokelse</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>df_merged[<span class="st">"Total_score"</span>] <span class="op">=</span> df_merged[<span class="st">"Tilfredshet"</span>]<span class="op">*</span>vekt_undersokelse <span class="op">+</span> df_merged[<span class="st">"Avstand_score_norm"</span>]<span class="op">*</span>vekt_avstand</span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>df_merged[<span class="st">"Total_score_gjennomsnitt_indikatorer"</span>] <span class="op">=</span> df_merged[<span class="st">"Gjennomsnittlig_score"</span>]<span class="op">*</span>vekt_undersokelse <span class="op">+</span> df_merged[<span class="st">"Avstand_score_norm"</span>]<span class="op">*</span>vekt_avstand</span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Regner ut totalscore</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>vekt_avstand <span class="op">=</span> <span class="dv">1</span><span class="op">-</span>vekt_undersokelse</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>df_merged[<span class="st">"Total_score"</span>] <span class="op">=</span> df_merged[<span class="st">"Tilfredshet"</span>]<span class="op">*</span>vekt_undersokelse <span class="op">+</span> df_merged[<span class="st">"Avstand_score_norm"</span>]<span class="op">*</span>vekt_avstand</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>df_merged[<span class="st">"Total_score_gjennomsnitt_indikatorer"</span>] <span class="op">=</span> df_merged[<span class="st">"Gjennomsnittlig_score"</span>]<span class="op">*</span>vekt_undersokelse <span class="op">+</span> df_merged[<span class="st">"Avstand_score_norm"</span>]<span class="op">*</span>vekt_avstand</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="49bbb330-df98-4e01-9d6b-fbbd02fb1f70" class="cell" data-execution_count="23">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>df_sorted_merged <span class="op">=</span> (</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>    df_merged</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>        .sort_values(<span class="st">"Total_score"</span>, ascending <span class="op">=</span> <span class="va">False</span>)</span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>        .iloc[:<span class="dv">16</span>])</span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>df_sorted_merged_gjennomsnitt <span class="op">=</span> (</span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>    df_merged</span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>        .sort_values(<span class="st">"Total_score_gjennomsnitt_indikatorer"</span>, ascending <span class="op">=</span> <span class="va">False</span>)</span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>        .iloc[:<span class="dv">16</span>])</span>
-<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>sns.barplot(data<span class="op">=</span>df_sorted_merged,</span>
-<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>            y<span class="op">=</span><span class="st">"barnehage"</span>,</span>
-<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>            x<span class="op">=</span><span class="st">"Total_score"</span>,</span>
-<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>           hue<span class="op">=</span><span class="st">"Eierform"</span>,</span>
-<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>           dodge <span class="op">=</span> <span class="va">False</span>)</span>
-<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>plt.yticks(ha<span class="op">=</span><span class="st">"right"</span>,</span>
-<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a>           ticks<span class="op">=</span><span class="bu">range</span>(<span class="bu">len</span>(df_sorted_merged[<span class="st">"barnehage"</span>])),</span>
-<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a>           labels<span class="op">=</span>[v[:<span class="dv">15</span>] <span class="cf">for</span> v <span class="kw">in</span> df_sorted_merged[<span class="st">'barnehage'</span>]])</span>
-<span id="cb30-20"><a href="#cb30-20" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb30-21"><a href="#cb30-21" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb30-22"><a href="#cb30-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-23"><a href="#cb30-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-24"><a href="#cb30-24" aria-hidden="true" tabindex="-1"></a>sns.barplot(data<span class="op">=</span>df_sorted_merged_gjennomsnitt,</span>
-<span id="cb30-25"><a href="#cb30-25" aria-hidden="true" tabindex="-1"></a>            y<span class="op">=</span><span class="st">"barnehage"</span>,</span>
-<span id="cb30-26"><a href="#cb30-26" aria-hidden="true" tabindex="-1"></a>            x<span class="op">=</span><span class="st">"Total_score_gjennomsnitt_indikatorer"</span>,</span>
-<span id="cb30-27"><a href="#cb30-27" aria-hidden="true" tabindex="-1"></a>           hue<span class="op">=</span><span class="st">"Eierform"</span>,</span>
-<span id="cb30-28"><a href="#cb30-28" aria-hidden="true" tabindex="-1"></a>           dodge<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb30-29"><a href="#cb30-29" aria-hidden="true" tabindex="-1"></a>plt.yticks(ha<span class="op">=</span><span class="st">"right"</span>,</span>
-<span id="cb30-30"><a href="#cb30-30" aria-hidden="true" tabindex="-1"></a>           ticks<span class="op">=</span><span class="bu">range</span>(<span class="bu">len</span>(df_sorted_merged_gjennomsnitt[<span class="st">"barnehage"</span>])),</span>
-<span id="cb30-31"><a href="#cb30-31" aria-hidden="true" tabindex="-1"></a>           labels<span class="op">=</span>[v[:<span class="dv">15</span>] <span class="cf">for</span> v <span class="kw">in</span> df_sorted_merged_gjennomsnitt[<span class="st">'barnehage'</span>]])</span>
-<span id="cb30-32"><a href="#cb30-32" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb30-33"><a href="#cb30-33" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>df_sorted_merged <span class="op">=</span> (</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>    df_merged</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>        .sort_values(<span class="st">"Total_score"</span>, ascending <span class="op">=</span> <span class="va">False</span>)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>        .iloc[:<span class="dv">16</span>])</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>df_sorted_merged_gjennomsnitt <span class="op">=</span> (</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>    df_merged</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>        .sort_values(<span class="st">"Total_score_gjennomsnitt_indikatorer"</span>, ascending <span class="op">=</span> <span class="va">False</span>)</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>        .iloc[:<span class="dv">16</span>])</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>sns.barplot(data<span class="op">=</span>df_sorted_merged,</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>            y<span class="op">=</span><span class="st">"barnehage"</span>,</span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>            x<span class="op">=</span><span class="st">"Total_score"</span>,</span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>           hue<span class="op">=</span><span class="st">"Eierform"</span>,</span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>           dodge <span class="op">=</span> <span class="va">False</span>)</span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>plt.yticks(ha<span class="op">=</span><span class="st">"right"</span>,</span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>           ticks<span class="op">=</span><span class="bu">range</span>(<span class="bu">len</span>(df_sorted_merged[<span class="st">"barnehage"</span>])),</span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>           labels<span class="op">=</span>[v[:<span class="dv">15</span>] <span class="cf">for</span> v <span class="kw">in</span> df_sorted_merged[<span class="st">'barnehage'</span>]])</span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a>sns.barplot(data<span class="op">=</span>df_sorted_merged_gjennomsnitt,</span>
+<span id="cb28-25"><a href="#cb28-25" aria-hidden="true" tabindex="-1"></a>            y<span class="op">=</span><span class="st">"barnehage"</span>,</span>
+<span id="cb28-26"><a href="#cb28-26" aria-hidden="true" tabindex="-1"></a>            x<span class="op">=</span><span class="st">"Total_score_gjennomsnitt_indikatorer"</span>,</span>
+<span id="cb28-27"><a href="#cb28-27" aria-hidden="true" tabindex="-1"></a>           hue<span class="op">=</span><span class="st">"Eierform"</span>,</span>
+<span id="cb28-28"><a href="#cb28-28" aria-hidden="true" tabindex="-1"></a>           dodge<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb28-29"><a href="#cb28-29" aria-hidden="true" tabindex="-1"></a>plt.yticks(ha<span class="op">=</span><span class="st">"right"</span>,</span>
+<span id="cb28-30"><a href="#cb28-30" aria-hidden="true" tabindex="-1"></a>           ticks<span class="op">=</span><span class="bu">range</span>(<span class="bu">len</span>(df_sorted_merged_gjennomsnitt[<span class="st">"barnehage"</span>])),</span>
+<span id="cb28-31"><a href="#cb28-31" aria-hidden="true" tabindex="-1"></a>           labels<span class="op">=</span>[v[:<span class="dv">15</span>] <span class="cf">for</span> v <span class="kw">in</span> df_sorted_merged_gjennomsnitt[<span class="st">'barnehage'</span>]])</span>
+<span id="cb28-32"><a href="#cb28-32" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb28-33"><a href="#cb28-33" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -605,19 +605,19 @@ Ingen god match: 'Veksthusfløtten familiebarnehage AS' (beste: 'monoliten famil
 <p>Figurene viser at det Kardemomme barnehage som er den beste totalpakka for oss, gitt at avstand teller 70 pst. og foreldreundersøkelsen teller 30 pst.</p>
 <p>Topplisten er dominert av private barnehager. Det sies at det er vanskelig å komme inn i en privat barnehage dersom man ikke har den på førsteplass. En mulighet er derfor å ha en privat barnehage på førsteplass og fylle opp resten av søknaden med kommunale. Det er innteressant å bare se på de kommunale barnehagene.</p>
 <div id="d2e1e0d9-9d1f-49eb-8fd6-8c4140c51c83" class="cell" data-execution_count="24">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>df_sorted_merged_kommunal <span class="op">=</span> (</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    df_merged.loc[df_merged[<span class="st">"Eierform"</span>]<span class="op">==</span><span class="st">"Kommunal"</span>,:]</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>        .sort_values(<span class="st">"Total_score"</span>, ascending <span class="op">=</span> <span class="va">False</span>)</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>        .iloc[:<span class="dv">11</span>])</span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>sns.barplot(data<span class="op">=</span>df_sorted_merged_kommunal,</span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>            y<span class="op">=</span><span class="st">"barnehage"</span>,</span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>            x<span class="op">=</span><span class="st">"Total_score"</span>)</span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>plt.yticks(ha<span class="op">=</span><span class="st">"right"</span>,</span>
-<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>           ticks<span class="op">=</span><span class="bu">range</span>(<span class="bu">len</span>(df_sorted_merged_kommunal[<span class="st">"barnehage"</span>])),</span>
-<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>           labels<span class="op">=</span>[v[:<span class="dv">15</span>] <span class="cf">for</span> v <span class="kw">in</span> df_sorted_merged_kommunal[<span class="st">"barnehage"</span>]])</span>
-<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>df_sorted_merged_kommunal <span class="op">=</span> (</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    df_merged.loc[df_merged[<span class="st">"Eierform"</span>]<span class="op">==</span><span class="st">"Kommunal"</span>,:]</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>        .sort_values(<span class="st">"Total_score"</span>, ascending <span class="op">=</span> <span class="va">False</span>)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>        .iloc[:<span class="dv">11</span>])</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>sns.barplot(data<span class="op">=</span>df_sorted_merged_kommunal,</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>            y<span class="op">=</span><span class="st">"barnehage"</span>,</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>            x<span class="op">=</span><span class="st">"Total_score"</span>)</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>plt.yticks(ha<span class="op">=</span><span class="st">"right"</span>,</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>           ticks<span class="op">=</span><span class="bu">range</span>(<span class="bu">len</span>(df_sorted_merged_kommunal[<span class="st">"barnehage"</span>])),</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>           labels<span class="op">=</span>[v[:<span class="dv">15</span>] <span class="cf">for</span> v <span class="kw">in</span> df_sorted_merged_kommunal[<span class="st">"barnehage"</span>]])</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -627,32 +627,32 @@ Ingen god match: 'Veksthusfløtten familiebarnehage AS' (beste: 'monoliten famil
 </div>
 </div>
 <div id="2d5ecf20-1240-473b-bc97-cc394eef9c59" class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Mapper på kart</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>kart <span class="op">=</span> folium.Map(</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    location<span class="op">=</span>hjem,</span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>    zoom_start<span class="op">=</span><span class="dv">14</span>,</span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx <span class="kw">in</span> df_merged.index:</span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> pd.isna(df_merged.loc[idx, <span class="st">"Latitude"</span>]):</span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>        folium.Marker(</span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>            location<span class="op">=</span>[</span>
-<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>                df_merged.loc[idx, <span class="st">"Latitude"</span>],</span>
-<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>                df_merged.loc[idx, <span class="st">"Longitude"</span>]</span>
-<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>            ],</span>
-<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>            tooltip <span class="op">=</span> df_merged.loc[idx, <span class="st">"barnehage"</span>],</span>
-<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>            popup<span class="op">=</span><span class="ss">f"</span><span class="sc">{</span>df_merged<span class="sc">.</span>loc[idx, <span class="st">"barnehage"</span>]<span class="sc">}</span><span class="ss">, Tilfredshet: </span><span class="sc">{</span>df_merged<span class="sc">.</span>loc[idx, <span class="st">"Tilfredshet"</span>]<span class="sc">}</span><span class="ss">"</span></span>
-<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>        ).add_to(kart)</span>
-<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a><span class="co">#Legger til hjem</span></span>
-<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a>folium.Marker(</span>
-<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a>    location <span class="op">=</span> hjem,</span>
-<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a>    tooltip <span class="op">=</span> <span class="st">"Hjem"</span>,</span>
-<span id="cb32-23"><a href="#cb32-23" aria-hidden="true" tabindex="-1"></a>    popup<span class="op">=</span><span class="st">"Hjem"</span>,</span>
-<span id="cb32-24"><a href="#cb32-24" aria-hidden="true" tabindex="-1"></a>    icon<span class="op">=</span>folium.Icon(color<span class="op">=</span><span class="st">"red"</span>)</span>
-<span id="cb32-25"><a href="#cb32-25" aria-hidden="true" tabindex="-1"></a>).add_to(kart)</span>
-<span id="cb32-26"><a href="#cb32-26" aria-hidden="true" tabindex="-1"></a>kart</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Mapper på kart</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>kart <span class="op">=</span> folium.Map(</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    location<span class="op">=</span>hjem,</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    zoom_start<span class="op">=</span><span class="dv">14</span>,</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx <span class="kw">in</span> df_merged.index:</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> pd.isna(df_merged.loc[idx, <span class="st">"Latitude"</span>]):</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>        folium.Marker(</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>            location<span class="op">=</span>[</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>                df_merged.loc[idx, <span class="st">"Latitude"</span>],</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>                df_merged.loc[idx, <span class="st">"Longitude"</span>]</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>            ],</span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>            tooltip <span class="op">=</span> df_merged.loc[idx, <span class="st">"barnehage"</span>],</span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>            popup<span class="op">=</span><span class="ss">f"</span><span class="sc">{</span>df_merged<span class="sc">.</span>loc[idx, <span class="st">"barnehage"</span>]<span class="sc">}</span><span class="ss">, Tilfredshet: </span><span class="sc">{</span>df_merged<span class="sc">.</span>loc[idx, <span class="st">"Tilfredshet"</span>]<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>        ).add_to(kart)</span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a><span class="co">#Legger til hjem</span></span>
+<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-20"><a href="#cb30-20" aria-hidden="true" tabindex="-1"></a>folium.Marker(</span>
+<span id="cb30-21"><a href="#cb30-21" aria-hidden="true" tabindex="-1"></a>    location <span class="op">=</span> hjem,</span>
+<span id="cb30-22"><a href="#cb30-22" aria-hidden="true" tabindex="-1"></a>    tooltip <span class="op">=</span> <span class="st">"Hjem"</span>,</span>
+<span id="cb30-23"><a href="#cb30-23" aria-hidden="true" tabindex="-1"></a>    popup<span class="op">=</span><span class="st">"Hjem"</span>,</span>
+<span id="cb30-24"><a href="#cb30-24" aria-hidden="true" tabindex="-1"></a>    icon<span class="op">=</span>folium.Icon(color<span class="op">=</span><span class="st">"red"</span>)</span>
+<span id="cb30-25"><a href="#cb30-25" aria-hidden="true" tabindex="-1"></a>).add_to(kart)</span>
+<span id="cb30-26"><a href="#cb30-26" aria-hidden="true" tabindex="-1"></a>kart</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div style="width:100%;"><div style="position:relative;width:100%;height:0;padding-bottom:60%;"><span style="color:#565656">Make this Notebook Trusted to load map: File -&gt; Trust Notebook</span><iframe srcdoc="<!DOCTYPE html>
 <html>
