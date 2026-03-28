@@ -7,6 +7,8 @@ dependencies = [
     "folium",
     "geopy",
     "ipykernel",
+    "ipympl>=0.10.0",
+    "ipywidgets>=8.1.8",
     "jupyterlab",
     "matplotlib",
     "numpy",
