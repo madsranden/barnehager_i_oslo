@@ -16,7 +16,7 @@ st.sidebar.header("Innstillinger")
 
 år = st.sidebar.selectbox("År", [2026, 2025, 2023], index=0)
 
-hjem_adresse = st.sidebar.text_input("Hjemadresse", value="Hedmarksgata 4")
+hjem_adresse = st.sidebar.text_input("Hjemadresse", value="Karl Johans gate 1")
 
 vekt_undersokelse = st.sidebar.slider(
     "Vekting av foreldreundersøkelsen",
