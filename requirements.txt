@@ -1,0 +1,9 @@
+streamlit
+streamlit-folium
+folium
+geopy
+plotly
+pandas
+numpy
+fastparquet
+pyarrow

@@ -8,10 +8,10 @@ from geopy.geocoders import Nominatim
 from geopy.distance import distance
 from geo_func import avstand_score
 
-st.set_page_config(page_title="Barnehager i Oslo", layout="wide")
-st.title("Barnehager i Oslo")
+st.set_page_config(page_title="Finn den beste barnehagen i Oslo", layout="wide")
+st.title("Finn din perfekte barnehage i Oslo", text_alignment = 'center')
 
-# --- Sidebar: brukerinput ---
+#Sidebar-
 st.sidebar.header("Innstillinger")
 
 år = st.sidebar.selectbox("År", [2026, 2025, 2023], index=0)
@@ -27,7 +27,7 @@ vekt_undersokelse = st.sidebar.slider(
     help="0 = kun avstand, 1 = kun foreldreundersøkelsen"
 )
 
-# --- Last data ---
+# Last data
 @st.cache_data
 def last_data(år):
     df = pd.read_parquet("data/barnehager_renset.parquet", engine="fastparquet")
@@ -67,7 +67,7 @@ def geocode_adresse(adresse):
     return None, None
 
 
-# --- Beregning ---
+#  Beregning 
 df_wide = last_data(år)
 df_geo = last_koordinater()
 hjem_lat, hjem_lon = geocode_adresse(hjem_adresse)
@@ -98,13 +98,12 @@ df_merged["Total_score"] = (
     + df_merged["Avstand_score"] * vekt_avstand
 )
 
-# --- Vis resultater ---
-col1, col2 = st.columns([1, 1])
+#  Vis resultater 
+tab1, tab2 = st.tabs(["Dine topp 15 barnehager", "Kart over barnehager i nærheten"])
 
 # Stolpediagram
-with col1:
-    st.subheader("Topp 16 barnehager")
-    df_top = df_merged.sort_values("Total_score", ascending=False).head(16)
+with tab1:
+    df_top = df_merged.sort_values("Total_score", ascending=False).head(15)
     score_order = df_top.sort_values("Total_score", ascending=False)["barnehage"].tolist()
 
     fig = px.bar(
@@ -113,6 +112,7 @@ with col1:
         y="barnehage",
         color="Eierform",
         orientation="h",
+        range_x=((df_top["Total_score"].min()-1),5),
         labels={"Total_score": "Total score", "barnehage": ""},
         color_discrete_map={"Kommunal": "#4C78A8", "Privat": "#F58518"},
         category_orders={"barnehage": score_order}
@@ -124,8 +124,7 @@ with col1:
     st.plotly_chart(fig, use_container_width=True)
 
 # Kart
-with col2:
-    st.subheader("Kart")
+with tab2:
     kart = folium.Map(location=hjem, zoom_start=14)
 
     for _, row in df_merged.iterrows():
@@ -143,3 +142,10 @@ with col2:
     ).add_to(kart)
 
     st_folium(kart, use_container_width=True, height=500)
+
+# Sammenleggbar boks (god for lengre tekst)
+with open("forklaring_dashbord.md", "r", encoding="utf-8") as f:
+    tekst = f.read()
+
+with st.expander("Om dashbordet"):
+    st.markdown(tekst)
