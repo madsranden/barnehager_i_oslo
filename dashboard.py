@@ -1,3 +1,4 @@
+from geopy.exc import GeocoderUnavailable
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -6,6 +7,7 @@ import folium
 from streamlit_folium import st_folium
 from geopy.geocoders import Nominatim
 from geopy.distance import distance
+from geopy.exc import GeocoderUnavailable
 from geo_func import avstand_score
 
 st.set_page_config(page_title="Finn den beste barnehagen i Oslo", layout="wide")
@@ -61,7 +63,10 @@ def last_koordinater():
 def geocode_adresse(adresse):
     geolocator = Nominatim(user_agent="barnehager_dashboard")
     query = f"{adresse}, Oslo, Norge"
-    location = geolocator.geocode(query)
+    try:
+        location = location = geolocator.geocode(query)
+    except GeocoderUnavailable:
+        return None, None
     if location:
         return location.latitude, location.longitude
     return None, None
