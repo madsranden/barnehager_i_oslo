@@ -5,10 +5,9 @@ import numpy as np
 import plotly.express as px
 import folium
 from streamlit_folium import st_folium
-from geopy.geocoders import Nominatim
 from geopy.distance import distance
-from geopy.exc import GeocoderUnavailable
 from geo_func import avstand_score
+import requests
 
 st.set_page_config(page_title="Finn den beste barnehagen i Oslo", layout="wide")
 st.title("Finn din perfekte barnehage i Oslo", text_alignment = 'center')
@@ -61,15 +60,14 @@ def last_koordinater():
 
 @st.cache_data
 def geocode_adresse(adresse):
-    geolocator = Nominatim(user_agent="barnehager_dashboard")
-    query = f"{adresse}, Oslo, Norge"
-    try:
-        location = location = geolocator.geocode(query)
-    except GeocoderUnavailable:
+    url = "https://ws.geonorge.no/adresser/v1/sok"
+    respons = requests.get(url, params={"sok": f"{adresse}", "fuzzy": "true", "kommunenummer": "0301"})
+    data = respons.json()
+    if not data["adresser"]:
         return None, None
-    if location:
-        return location.latitude, location.longitude
-    return None, None
+    lat = data["adresser"][0]["representasjonspunkt"]["lat"]
+    lon = data["adresser"][0]["representasjonspunkt"]["lon"]
+    return lat, lon
 
 
 #  Beregning 
