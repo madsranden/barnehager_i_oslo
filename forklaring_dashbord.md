@@ -12,7 +12,7 @@ Barnehager som ikke har tall fra foreldreundersøkelsen eller mangler kartdata e
 ### Nærmere om tallene og metoden
 #### Data: 
 - **Foreldreundersøkelsen:** Tilgjengelig fra [Udir](https://www.udir.no/tall-og-forskning/statistikk/statistikk-barnehage/fuba-resultater-alle-sporsmal/). Foreldrene scorer barnehagen på en skala fra 1 til 5 på temaer som tilfredshet, barns medvirkning og lek. 
-- **Kartdata:** Hentet fra OpenStreetMap via [Overpass API](https://overpass-api.de/) for geolokasjon av barnehagene.
+- **Kartdata:** Hentet fra OpenStreetMap via [Overpass API](https://overpass-api.de/) for geolokasjon av barnehagene. Hjemandresse geokodes ved hjelp av Kartverkets API. Klikk [her](https://ws.geonorge.no/adresser/v1/#/default/get_sok) for mer informasjon og søkehjelp til å finne riktig hjemadresse for deg.
 
 #### Metode
 - **Score fra foreldreundersøkelen:** Varibelen "tilfredshet" er antatt å fange opp den foreldres helhetsinntrykk av barnehagen. Den gjennomsnittlige poengsummen fra danne variabelen danner grunnlaget for denne scoren. Det har ikke vært ta hensyn til statistisk usikkerhet, som særlig i små barnehager kan være stor. 

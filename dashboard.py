@@ -1,4 +1,3 @@
-from geopy.exc import GeocoderUnavailable
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -76,7 +75,7 @@ df_geo = last_koordinater()
 hjem_lat, hjem_lon = geocode_adresse(hjem_adresse)
 
 if hjem_lat is None:
-    st.error(f"Kunne ikke finne adressen '{hjem_adresse}'. Prøv en annen adresse.")
+    st.error(f"Kunne ikke finne adressen '{hjem_adresse}'. Prøv en annen adresse eller se søkehjelp")
     st.stop()
 
 hjem = (hjem_lat, hjem_lon)
@@ -150,5 +149,5 @@ with tab2:
 with open("forklaring_dashbord.md", "r", encoding="utf-8") as f:
     tekst = f.read()
 
-with st.expander("Om dashbordet"):
+with st.expander("Informasjon om dashbordet og søkehjelp"):
     st.markdown(tekst)
