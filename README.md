@@ -14,7 +14,7 @@ og gir en rangert liste og interaktivt kart over barnehagene.
 ## Datakilder
 
 - **Foreldreundersøkelsen** – Lastet ned fra [Udir](https://www.udir.no/tall-og-forskning/statistikk/statistikk-barnehage/fuba-resultater-alle-sporsmal/). Foreldrene scorer barnehagen på en skala fra 1 til 5 på temaer som tilfredshet, barns medvirkning og lek.
-- **Kartdata** – Hentet fra OpenStreetMap via [Overpass API](https://overpass-api.de/) for geolokasjon av barnehagene.
+- **Kartdata** – Hentet fra OpenStreetMap via [Overpass API](https://overpass-api.de/) for geolokasjon av barnehagene. Hjemadresse geokodes ved hjelp av Kartverkets API. Klikk [her](https://ws.geonorge.no/adresser/v1/#/default/get_sok) for mer informasjon.
 
 ## Kjør dashbordet lokalt
 
@@ -32,8 +32,8 @@ og gir en rangert liste og interaktivt kart over barnehagene.
 
 Vil du gå dypere kan du åpne `analyse.ipynb` i JupyterLab.
 
-## Begrensninger
+## Noen begrensninger
 
-- Barnehager uten data fra Foreldreundersøkelsen er ikke med i analysen
+- Barnehager uten data fra Foreldreundersøkelsen eller manglende geodata er ikke med i analysen
 - Det er ikke tatt hensyn til svarprosent eller statistisk usikkerhet
 - Geografisk avstand tar ikke hensyn til reisevei eller kollektivtransport
